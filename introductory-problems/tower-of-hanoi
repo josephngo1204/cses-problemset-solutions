@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+ 
+typedef long long ll; 
+ 
+void hanoi(ll disks, ll source, ll target, ll support)
+{
+	if (disks == 1)
+	{
+		std::cout << source << " " << target << "\n";
+		return;
+	}
+		
+	else
+	{ 
+		hanoi(disks - 1, source, support, target); 
+		std::cout << source << " " << target << "\n";
+		hanoi(disks - 1, support, target, source); 
+	}
+}
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	ll moves{ static_cast<ll>(pow(2, n) - 1) }; 
+	std::cout << moves << "\n";
+ 
+	hanoi(n, 1, 3, 2); 
+ 
+	return 0; 
+}
