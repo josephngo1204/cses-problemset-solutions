@@ -1,0 +1,53 @@
+#include <iostream>
+#include <cmath>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	ll left{};
+	ll right{};
+ 
+	for (ll i{ 1 }; i <= n; ++i)
+	{
+		std::cin >> left >> right;
+ 
+		if ((left + right) % 3 == 0)
+		{
+			if (left > right)
+			{
+				if ((left / 2.0) <= right)
+				{
+					std::cout << "YES\n";
+				}
+				else
+				{
+					std::cout << "NO\n";
+				}
+			}
+ 
+			if (right > left)
+			{
+				if ((right / 2.0) <= left)
+				{
+					std::cout << "YES\n";
+				}
+				else
+				{
+					std::cout << "NO\n";
+				}
+			}
+ 
+			if (left == right)
+				std::cout << "YES\n"; 
+		}
+ 
+		else
+			std::cout << "NO\n";
+	}
+ 
+	return 0; 
+}
