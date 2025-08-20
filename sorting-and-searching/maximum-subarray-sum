@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <functional>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<ll> arr(static_cast<std::size_t>(n)); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll a{};
+		std::cin >> a;
+ 
+		arr[static_cast<std::size_t>(i)] = a;
+	}
+ 
+	ll best{static_cast<ll>(-1e10)};
+	ll sum{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		sum = std::max(arr[static_cast<std::size_t>(i)], sum + arr[static_cast<std::size_t>(i)]);
+		best = std::max(sum, best); 
+	}
+ 
+	std::cout << best; 
+ 
+	return 0; 
+}
