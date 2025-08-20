@@ -1,0 +1,24 @@
+#include <vector>
+#include <iostream>
+ 
+int main()
+{
+	int n{};
+	std::cin >> n; 
+ 
+	std::vector<bool> found(static_cast<std::size_t>(n), false);
+ 
+	int x{}; 
+	while (std::cin >> x)
+	{
+		found[static_cast<std::size_t>(x - 1)] = true; 
+	}
+ 
+	for (int index{ 0 }; index < n; ++index)
+	{
+		if (!found[static_cast<std::size_t>(index)])
+			std::cout << index + 1; 
+	}
+ 
+	return 0; 
+}
