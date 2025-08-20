@@ -1,1 +1,22 @@
-
+#include <iostream>
+#include <set>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::set<ll> s{};
+	ll x{};
+ 
+	while (std::cin >> x)
+	{
+		s.insert(x); 
+	}
+ 
+	std::cout << s.size(); 
+ 
+	return 0; 
+}
