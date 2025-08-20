@@ -1,0 +1,40 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{}; 
+	std::cin >> n;
+ 
+	std::vector<std::pair<ll, ll>> movie{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll a{};
+		ll b{};
+ 
+		std::cin >> a >> b;
+		movie.push_back({ b, a });
+	}
+ 
+	std::sort(movie.begin(), movie.end()); 
+ 
+	ll count{};
+	ll currentEnd{ -1 };
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		if (movie[static_cast<std::size_t>(i)].second >= currentEnd)
+		{
+			currentEnd = movie[static_cast<std::size_t>(i)].first;
+			++count; 
+		}
+	}
+ 
+	std::cout << count << "\n"; 
+ 
+	return 0; 
+}
