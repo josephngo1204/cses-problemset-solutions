@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <functional>
+#include <cmath>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<ll> arr(static_cast<std::size_t>(n));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll a{};
+		std::cin >> a; 
+		arr[static_cast<std::size_t>(i)] = a; 
+	}
+ 
+	std::sort(arr.begin(), arr.end()); 
+ 
+	ll median{};
+ 
+	if (n % 2 == 0)
+	{
+		median = (arr[static_cast<std::size_t>(n / 2)] + arr[static_cast<std::size_t>((n - 1) / 2)]) / 2; 
+	}
+ 
+	else
+	{
+		median = arr[static_cast<std::size_t>(n / 2)]; 
+	}
+ 
+	ll ans{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ans += (std::abs(arr[static_cast<std::size_t>(i)] - median)); 
+	}
+ 
+	std::cout << ans; 
+ 
+	return 0; 
+}
