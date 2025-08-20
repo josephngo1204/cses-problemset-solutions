@@ -1,0 +1,30 @@
+#include <vector>
+#include <iostream>
+ 
+int main()
+{
+	long long n{};
+	std::cin >> n;
+ 
+	std::vector<long long> array{}; 
+	long long x{};
+	while (std::cin >> x)
+	{
+		array.push_back(x); 
+	}
+ 
+	long long count{ 0 }; 
+ 
+	for (std::size_t i{ 0 }; i < n - 1; ++i)
+	{
+		while (array[i] > array[i + 1])
+		{
+			array[i + 1] += 1; 
+			++count; 
+		}
+	}
+ 
+	std::cout << count; 
+	
+	return 0; 
+}
