@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	std::vector<ll> found(26, 0); 
+ 
+	char letter{};
+	while (std::cin >> letter)
+	{
+		found[static_cast<std::size_t>(letter - 'A')] += 1;
+	}
+ 
+	ll count{}; 
+ 
+	for (auto x : found)
+	{
+		if (x % 2 == 0)
+			continue;
+		else
+		{
+			++count; 
+		}
+	}
+ 
+	if (count > 1)
+	{
+		std::cout << "NO SOLUTION"; 
+	}
+ 
+	else
+	{
+		for (ll i{ 0 }; i <= 25; ++i)
+		{
+			if ((found[static_cast<std::size_t>(i)] % 2 == 0) && (found[static_cast<std::size_t>(i)] > 0))
+			{
+				for (ll j{ 1 }; j <= found[static_cast<std::size_t>(i)] / 2; ++j)
+				{
+					std::cout << static_cast<char>('A' + static_cast<std::size_t>(i));
+				}
+			}
+		}
+ 
+		for (ll i{ 0 }; i <= 25; ++i)
+		{
+			if ((found[static_cast<std::size_t>(i)] % 2 != 0) && (found[static_cast<std::size_t>(i)] > 0))
+			{
+				for (ll k{ 1 }; k <= found[static_cast<std::size_t>(i)]; ++k)
+				{
+					std::cout << static_cast<char>('A' + static_cast<std::size_t>(i));
+				}
+			}
+		}
+	
+ 
+		for (ll i{ 25 }; i >= 0; --i)
+		{
+			if ((found[static_cast<std::size_t>(i)] % 2 == 0) && (found[static_cast<std::size_t>(i)] > 0))
+			{
+				for (ll l{ (found[static_cast<std::size_t>(i)] / 2) + 1}; l <= found[static_cast<std::size_t>(i)]; ++l)
+				{
+					std::cout << static_cast<char>('A' + static_cast<std::size_t>(i));
+				}
+			}
+		}
+	}
+ 
+	return 0; 
+}
