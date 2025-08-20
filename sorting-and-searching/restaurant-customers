@@ -1,0 +1,45 @@
+#include <iostream>
+#include <utility>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n; 
+ 
+	std::vector<std::pair<ll, ll>> data{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll a{};
+		ll b{};
+ 
+		std::cin >> a >> b;
+ 
+		data.push_back({ a, 1 });
+		data.push_back({ b, -1 });
+	}
+ 
+	std::sort(data.begin(), data.end(), [](std::pair<ll, ll>& a, std::pair<ll, ll>& b) {
+		if (a.first == b.first) { return a.second < b.second; }
+		else { return a.first < b.first; }
+		}); 
+	
+	ll max{}; 
+	ll current{};
+ 
+	for (auto& x : data)
+	{
+		current += x.second;
+ 
+		if (current > max)
+			max = current;
+	}
+ 
+	std::cout << max << "\n"; 
+	
+	return 0; 
+}
