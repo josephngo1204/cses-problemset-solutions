@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	ll m{};
+	ll k{};
+ 
+	std::cin >> n >> m >> k;
+ 
+	std::vector<ll> desired(static_cast<std::size_t>(n));
+	ll input{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> input;
+		desired[static_cast<std::size_t>(i)] = input;
+	}
+ 
+	std::vector<ll> avail(static_cast<std::size_t>(m));
+	ll input2{};
+ 
+	for (ll j{ 0 }; j < m; ++j)
+	{
+		std::cin >> input2;
+		avail[static_cast<std::size_t>(j)] = input2;
+	}
+ 
+	ll count{};
+ 
+	std::sort(desired.begin(), desired.end());
+	std::sort(avail.begin(), avail.end());
+ 
+	std::size_t i{};
+	std::size_t j{};
+ 
+	while (i < desired.size() && j < avail.size())
+	{
+		if (desired[i] == avail[j] || (desired[i] <= avail[j] + k && desired[i] >= avail[j] - k))
+		{
+			++count;
+			++i;
+			++j;
+		}
+		else if (desired[i] < avail[j])
+		{
+			++i; 
+		}
+		else
+		{
+			++j; 
+		}
+	}
+ 
+	std::cout << count; 
+ 
+	return 0;
+}
