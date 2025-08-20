@@ -1,0 +1,90 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+ 
+typedef long long ll; 
+ 
+int main()
+{ 
+	std::string s{};
+	std::cin >> s;
+ 
+	ll n{ static_cast<ll>(s.length()) };
+ 
+	std::string answer{};
+ 
+	std::vector<int> freq(26);
+ 
+	for (char c : s)
+	{
+		++freq[static_cast<std::size_t>(c - 'A')];
+	}
+ 
+	while (answer.length() < static_cast<std::size_t>(n))
+	{
+		bool action{ false };
+ 
+		for (int i{ 0 }; i < 26; ++i)
+		{
+			if ((freq[static_cast<std::size_t>(i)] > 0) && ((answer.empty()) || (answer.back() != (i + 'A'))))
+			{
+				--freq[static_cast<std::size_t>(i)]; 
+				answer += (static_cast<char>(i + 'A'));
+ 
+				bool canFinish{ true };
+				ll digitsLeft = n - static_cast<ll>(answer.length());
+ 
+				for (int j{ 0 }; j < 26; ++j)
+				{
+					if (i != j)
+					{
+						if (freq[static_cast<std::size_t>(j)] > ((digitsLeft + 1) / 2))
+						{
+							canFinish = false;
+							break; 
+						}
+					}
+ 
+					else
+					{
+						if (freq[static_cast<std::size_t>(j)] > (digitsLeft / 2))
+						{
+							canFinish = false; 
+							break; 
+						}
+					}
+				}
+ 
+				if (!canFinish)
+				{
+					++freq[static_cast<std::size_t>(i)];
+					answer.pop_back();
+				}
+ 
+				else
+				{
+					action = true;
+					break;
+				}
+			}
+		}
+ 
+		if (!action)
+		{
+			break;
+		}
+	}
+ 
+	if (answer.empty())
+	{
+		std::cout << "-1" << "\n"; 
+	}
+ 
+	else
+	{
+		std::cout << answer << "\n";
+	}
+ 
+	return 0; 
+}
