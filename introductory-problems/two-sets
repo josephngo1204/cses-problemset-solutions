@@ -1,0 +1,55 @@
+#include <vector>
+#include <iostream>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	ll sum{ (n * (1 + n)) / 2 };
+ 
+	std::vector<ll> first{};
+	std::vector<ll> second{};
+	ll currentSum{0}; 
+ 
+	if (sum % 2 == 0)
+	{
+		std::cout << "YES" << "\n";
+ 
+		for (ll i{ n }; i >= 1; --i)
+		{
+			if ((currentSum + i) <= (sum / 2))
+			{
+				first.push_back(i); 
+				currentSum += i; 
+				continue; 
+			}
+ 
+			else if ((currentSum + i) > (sum / 2))
+			{
+				second.push_back(i);
+			}
+		}
+	}
+ 
+	else
+	{
+		std::cout << "NO";
+		return 0;
+	}
+ 
+	std::cout << first.size() << "\n";
+ 
+	for (auto num : first)
+		std::cout << num << " ";
+ 
+	std::cout << "\n" << second.size() << "\n";
+ 
+	for (auto num : second)
+		std::cout << num << " ";
+ 
+	return 0;
+}
