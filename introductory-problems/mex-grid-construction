@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<std::vector<int>> grid(static_cast<std::size_t>(n), std::vector<int>(static_cast<std::size_t>(n)));
+ 
+	for (ll row{ 0 }; row < n; ++row)
+	{
+		for (ll col{ 0 }; col < n; ++col)
+		{
+			std::vector<bool> small((2 * static_cast<std::size_t>(n)) + 1, false);
+ 
+			for (ll c{ 0 }; c < col; ++c)
+			{
+				small[static_cast<std::size_t>(grid[static_cast<std::size_t>(row)][static_cast<std::size_t>(c)])] = true;
+			}
+ 
+			for (ll r{ 0 }; r < row; ++r)
+			{
+				small[static_cast<std::size_t>(grid[static_cast<std::size_t>(r)][static_cast<std::size_t>(col)])] = true;
+			}
+ 
+			int x{};
+			while (small[static_cast<std::size_t>(x)] == true)
+			{
+				++x;
+			}
+ 
+			grid[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)] = x;
+			std::cout << grid[static_cast<std::size_t>(row)][static_cast<std::size_t>(col)] << " ";
+		}
+ 
+		std::cout << "\n";
+	}
+ 
+	return 0; 
+ 
+}
