@@ -1,0 +1,23 @@
+#include <iostream>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	ll totalComb{1};
+	ll mod{ 1000000007 };
+ 
+	for (ll i{ 1 }; i <= n; ++i)
+	{
+		totalComb *= 2;
+		totalComb %= mod; 
+	}
+	
+	std::cout << totalComb;
+ 
+	return 0; 
+ 
+}
