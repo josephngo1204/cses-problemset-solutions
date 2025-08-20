@@ -1,0 +1,48 @@
+#include <iostream>
+#include <set>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	ll m{};
+ 
+	std::cin >> n >> m;
+ 
+ 
+	std::multiset<ll> prices{};
+	ll input{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> input;
+		prices.insert(input);
+	}
+ 
+ 
+	for (ll i{ 0 }; i < m; ++i)
+	{
+		ll input2{};
+		std::cin >> input2;
+ 
+		auto x = prices.upper_bound(input2); 
+		
+		if (x == prices.begin())
+		{
+			std::cout << "-1" << "\n";
+			continue;
+		}
+ 
+		else
+		{
+			--x;
+			std::cout << *x << "\n";
+			prices.erase(x); 
+		}
+	}
+ 
+	return 0; 
+ 
+}
