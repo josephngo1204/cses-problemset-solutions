@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	ll x{};
+ 
+	std::cin >> n >> x;
+ 
+	std::vector<ll> weight(static_cast<std::size_t>(n));
+ 
+	ll input{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> input;
+		weight[static_cast<std::size_t>(i)] = input;
+	}
+ 
+	std::sort(weight.begin(), weight.end());
+ 
+	ll i{ 0 };
+	ll j{ n - 1 };
+	ll count{};
+ 
+	while (true)
+	{
+		if (i == j)
+		{
+			++count;
+			break;
+		}
+ 
+		if (i > j)
+		{
+			break; 
+		}
+ 
+		if (weight[static_cast<std::size_t>(i)] + weight[static_cast<std::size_t>(j)] <= x)
+		{
+			++count;
+			++i; 
+			--j; 
+			continue;
+		}
+ 
+		else if (weight[static_cast<std::size_t>(i)] + weight[static_cast<std::size_t>(j)] > x)
+		{
+			++count; 
+			--j;
+			continue;
+		}
+	}
+ 
+	std::cout << count; 
+ 
+	return 0; 
+ 
+}
