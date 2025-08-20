@@ -1,0 +1,38 @@
+#include <vector>
+#include <iostream>
+ 
+int main()
+{
+	std::string dna{};
+	std::cin >> dna; 
+ 
+	std::size_t index{ 0 }; 
+	char previousChar{dna[index]};
+	int count{0}; 
+	int best_count{};
+ 
+	for (std::size_t i{1}; i < dna.length(); ++i)
+	{
+		if (dna[i] == previousChar)
+		{
+			++count;
+		}
+ 
+		if (dna[i] != previousChar)
+		{
+			count = 0;
+		}
+ 
+		if (count > best_count)
+		{
+			best_count = count; 
+		}
+ 
+		++index;
+		previousChar = dna[index];
+	}
+ 
+	std::cout << best_count + 1; 
+ 
+	return 0;
+}
