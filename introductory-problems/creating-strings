@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+ll calculateStrings(std::string_view input)
+{
+	ll factorial{ 1 };
+ 
+	for (ll i{ 2 }; i <= static_cast<ll>(input.size()); ++i)
+	{
+		factorial *= i;
+	}
+ 
+	ll freq{ 1 };
+ 
+	for (char j{ 'a' }; j <= 'z'; ++j)
+	{
+		char target = j;
+		auto count = std::count(input.begin(), input.end(), target);
+ 
+		if (count >= 2)
+		{
+			for (ll i{ 2 }; i <= count; ++i)
+			{
+				freq *= i;
+			}
+		}
+	}
+ 
+	return factorial / freq; 
+}
+ 
+ 
+int main()
+{
+	std::string input{}; 
+	std::cin >> input; 
+ 
+	ll k{ calculateStrings(input) }; 
+	std::cout << k << "\n"; 
+ 
+	std::vector<std::string> permutations{}; 
+	std::sort(input.begin(), input.end()); 
+ 
+	do
+	{
+		permutations.push_back(input); 
+	}
+ 
+	while (std::next_permutation(input.begin(), input.end()));
+ 
+	for (auto x : permutations)
+		std::cout << x << "\n"; 
+	
+	return 0; 
+}
