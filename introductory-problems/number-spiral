@@ -1,0 +1,55 @@
+#include <vector>
+#include <iostream>
+ 
+int main()
+{
+	long long t{}; 
+	std::cin >> t; 
+ 
+	for (long long i{ 1 }; i <= t; ++i)
+	{
+		long long x{};
+		long long y{};
+ 
+		std::cin >> y >> x;
+ 
+		long long n{}; 
+ 
+		if (x == y)
+		{
+			n = (x * y) - (x - 1);
+			std::cout << n << "\n";
+		}
+ 
+		if (y > x)
+		{
+			n = (y * y) - (y - 1);
+ 
+			if (y % 2 == 0)
+			{
+				std::cout << n + (y - x) << "\n";
+			}
+			else
+			{
+				std::cout << n - (y - x) << "\n";
+			}
+		}
+ 
+		if (x > y)
+		{
+			n = (x * x) - (x - 1);
+ 
+			if (x % 2 == 0)
+			{
+				std::cout << n - (x - y) << "\n";
+			}
+			else
+			{
+				std::cout << n + (x - y) << "\n";
+			}
+		}
+	}
+ 
+	return 0; 
+ 
+}
