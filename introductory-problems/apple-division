@@ -1,0 +1,34 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+ 
+typedef long long ll;
+ 
+ll apples(std::size_t index, ll sum1, ll sum2, std::vector<ll>& weights)
+{
+	if (index == weights.size())
+	{
+		return std::abs(sum2 - sum1); 
+	}
+ 
+	ll diff1 = apples(index + 1, sum1 + weights[index], sum2, weights);
+	ll diff2 = apples(index + 1, sum1, sum2 + weights[index], weights);
+ 
+	return std::min(diff1, diff2); 
+}
+ 
+ 
+int main()
+{
+	int n{};
+	std::cin >> n;
+ 
+	std::vector<ll> weights(static_cast<std::size_t>(n)); 
+ 
+	for (ll i{ 0 }; i <= n - 1; ++i)
+	{
+		std::cin >> weights[static_cast<std::size_t>(i)];
+	}
+ 
+	std::cout << apples(0, 0, 0, weights) << "\n"; 
+}
