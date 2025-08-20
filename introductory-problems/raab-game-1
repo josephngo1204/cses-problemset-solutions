@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll t{};
+	std::cin >> t;
+ 
+	for (ll i{ 1 }; i <= t; ++i)
+	{
+		ll n{};
+		int a{};
+		int b{};
+ 
+		std::cin >> n >> a >> b;
+ 
+		ll ties{ n - a - b };
+		n -= ties;
+ 
+		if ((a + b != n) || ((n >= 1) && ((a == n) || (b == n))) || (ties < 0))
+		{
+			std::cout << "NO\n";
+		}
+ 
+		else
+		{
+			std::cout << "YES\n";
+ 
+			for (ll d{ 1 }; d <= n; ++d)
+			{
+				std::cout << d << " ";
+			}
+ 
+			for (ll j{ n + 1 }; j <= n + ties; ++j)
+			{
+				std::cout << j << " "; 
+			}
+ 
+			std::cout << "\n"; 
+ 
+			for (ll k{ 1 }; k <= n; ++k)
+			{
+				ll l{ k + a }; 
+ 
+				if (l > n)
+				{
+					l -= n; 
+				}
+ 
+				std::cout << l << " ";
+			}
+ 
+			for (ll m{ n + 1 }; m <= n + ties; ++m)
+			{
+				std::cout << m << " ";
+			}
+ 
+			std::cout << "\n"; 
+		}
+	}
+ 
+	return 0; 
+ 
+}
