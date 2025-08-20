@@ -1,0 +1,86 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <stdbool.h>
+ 
+const int N{ 7 };
+const std::vector<std::pair<int, int>> dir{ {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+const std::string symb{ "DURL" };
+int answers{};
+std::string input{};
+bool visited[N][N]; 
+ 
+bool isInside(int row, int col)
+{
+	return 0 <= std::min(row, col) && std::max(row, col) < N;
+}
+ 
+bool isEmpty(int row, int col)
+{
+	return isInside(row, col) && !visited[row][col]; 
+}
+ 
+void findPaths(int row, int col, int i)
+{
+	if ((row != N - 1) && (col != 0) && (i == ((N * N) - 1)))
+		return;
+ 
+	if ((row == N - 1) && (col == 0) && (i != ((N * N) - 1)))
+		return; 
+ 
+	if (isEmpty(row - 1, col) && isEmpty(row + 1, col) && !isEmpty(row, col - 1) && !isEmpty(row, col + 1))
+		return;
+ 
+	if (!isEmpty(row - 1, col) && !isEmpty(row + 1, col) && isEmpty(row, col - 1) && isEmpty(row, col + 1))
+		return;
+ 
+	if (row >= 1 && col >= 1 && isEmpty(row - 1, col) && isEmpty(row, col - 1) && !isEmpty(row - 1, col - 1))
+		return;
+ 
+	if (row >= 1 && col <= N - 2 && isEmpty(row - 1, col) && isEmpty(row, col + 1) && !isEmpty(row - 1, col + 1)) 
+		return;
+	
+	if (row <= N - 2 && col >= 1 && isEmpty(row + 1, col) && isEmpty(row, col - 1) && !isEmpty(row + 1, col - 1)) 
+		return;
+	
+	if (row <= N - 2 && col <= N - 2 && isEmpty(row + 1, col) && isEmpty(row, col + 1) && !isEmpty(row + 1, col + 1)) 
+		return;
+ 
+	if ((i == (N * N) - 1) && (row == N - 1) && (col == 0))
+	{
+		++answers;
+		return;
+	}
+ 
+	for (int j{ 0 }; j < 4; ++j)
+	{
+		if ((input[static_cast<std::size_t>(i)] != '?') && (input[static_cast<std::size_t>(i)] != symb[static_cast<std::size_t>(j)]))
+			continue;
+ 
+		const std::pair<int, int>& d = dir[static_cast<std::size_t>(j)]; 
+ 
+		int r2{};
+		r2 = row + d.first; 
+		int c2{};
+		c2 = col + d.second;
+ 
+		if (isInside(r2, c2) && !visited[r2][c2])
+		{
+				visited[r2][c2] = true; 
+				findPaths(r2, c2, i + 1);
+				visited[r2][c2] = false;
+		}
+	}
+}
+ 
+int main()
+{
+	std::cin >> input;
+	
+	visited[0][0] = true;
+	findPaths(0, 0, 0); 
+ 
+	std::cout << answers << "\n";
+ 
+	return 0;
+}
