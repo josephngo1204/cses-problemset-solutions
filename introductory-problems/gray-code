@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<std::string> gray{"0", "1"};
+ 
+	ll a{ 2 }; 
+ 
+	for (ll j{ 1 }; j <= n - 1; ++j)
+	{
+		for (ll i{ 0 }; i < static_cast<ll>(pow(2, a - 1)); ++i)
+		{
+			std::string x{ "0" + gray[static_cast<std::size_t>(i)] };
+			gray.push_back(x);
+		}
+ 
+		for (ll k{ static_cast<ll>(pow(2, a - 1) - 1) }; k >= 0 ; --k)
+		{
+			std::string y{ "1" + gray[static_cast<std::size_t>(k)] };
+			gray.push_back(y);
+		}
+ 
+		gray.erase(gray.begin(), gray.begin() + static_cast<ll>(pow(2, a - 1)));
+		++a; 
+	}
+ 
+	for (auto x : gray)
+		std::cout << x << "\n"; 
+ 
+	return 0; 
+}
