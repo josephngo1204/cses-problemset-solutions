@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+ 
+	std::cin >> n;
+ 
+	std::vector<ll> dp(static_cast<std::size_t>(n + 1), 10000000); 
+ 
+	dp[0] = 0; 
+ 
+	for (ll i{ 0 }; i <= n; ++i)
+	{
+		std::string s{ std::to_string(i) };
+ 
+		for (auto d : s)
+		{
+			ll digit = d - '0'; 
+ 
+			if (i - digit >= 0)
+			{
+				dp[static_cast<std::size_t>(i)] = std::min(dp[static_cast<std::size_t>(i)], 1 + dp[static_cast<std::size_t>(i - digit)]);
+			}
+		}
+	}
+ 
+	std::cout << dp[static_cast<std::size_t>(n)];
+ 
+	return 0; 
+}
