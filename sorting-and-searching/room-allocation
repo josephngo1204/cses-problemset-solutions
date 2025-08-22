@@ -1,0 +1,65 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <queue>
+ 
+typedef long long ll;
+ 
+struct Customer
+{
+	ll arrival{};
+	ll departure{};
+	ll idx{}; 
+};
+ 
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+ 
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<Customer> c(n);
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> c[i].arrival >> c[i].departure;
+		c[i].idx = i;
+	}
+ 
+	ll k{};
+	std::vector<ll> assignedRoom(n);
+	std::priority_queue<std::pair<ll,ll>, std::vector<std::pair<ll, ll>>, std::greater<std::pair<ll, ll>>> minDepart{};
+ 
+	std::sort(c.begin(), c.end(), [](Customer& a, Customer& b)
+		{
+			return a.arrival < b.arrival; 
+		}); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		if (minDepart.empty() || minDepart.top().first >= c[i].arrival)
+		{
+			++k;
+			assignedRoom[c[i].idx] = k; 
+			minDepart.push({ c[i].departure, k });
+		}
+ 
+		else
+		{
+			assignedRoom[c[i].idx] = minDepart.top().second; 
+			minDepart.pop(); 
+			minDepart.push({ c[i].departure, assignedRoom[c[i].idx] });
+		}
+	}
+ 
+	std::cout << k << "\n";
+ 
+	for (auto& x : assignedRoom)
+	{
+		std::cout << x << " "; 
+	}
+ 
+	return 0; 
+}
