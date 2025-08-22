@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <map>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<ll> arr(static_cast<std::size_t>(n));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> arr[static_cast<std::size_t>(i)]; 
+	}
+ 
+	std::map<ll, ll> freq{};
+	freq[0] = 1; 
+ 
+	ll count{}; 
+	ll currentSum{}; 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		currentSum += arr[static_cast<std::size_t>(i)];
+ 
+		ll remainder = (currentSum % n + n) % n; 
+ 
+		if (freq.count(remainder))
+		{
+			count += freq[remainder]; 
+		}
+ 
+		++freq[remainder];
+	}
+ 
+	std::cout << count;
+ 
+	return 0; 
+}
