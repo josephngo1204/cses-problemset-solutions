@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::set<ll> l{};
+	std::set<ll, std::greater<ll>> r{};
+ 
+	std::vector<std::pair<ll, ll>> m{};
+ 
+	for (ll i{ 1 }; i <= n; ++i)
+	{
+		ll x{}; 
+		std::cin >> x;
+ 
+		m.push_back({ x, i });
+	}
+ 
+	std::sort(m.begin(), m.end(), std::greater<std::pair<ll, ll>>());
+ 
+	ll lastHeight = 10000000001;
+	std::vector<ll> update{}; 
+	std::vector<ll> dp(n + 2); 
+ 
+	for (std::pair<ll, ll>& x : m)
+	{
+		if (x.first != lastHeight)
+		{
+			for (auto& u : update)
+			{
+				l.insert(u);
+				r.insert(u);
+			}
+ 
+			update.clear(); 
+		}
+ 
+		auto it = l.lower_bound(x.second);
+		auto it2 = r.lower_bound(x.second);
+ 
+		int i = (it == l.end() ? 0 : *it);
+		int i2 = (it2 == r.end() ? 0 : *it2);
+ 
+		dp[x.second] = std::max(dp[i], dp[i2]) + 1; 
+ 
+		update.push_back(x.second); 
+		lastHeight = x.first; 
+	}
+ 
+	ll ans{};
+ 
+	for (auto& z : dp)
+	{
+		if (z > ans)
+		{
+			ans = z; 
+		}
+	}
+ 
+	std::cout << ans; 
+ 
+	return 0; 
+}
