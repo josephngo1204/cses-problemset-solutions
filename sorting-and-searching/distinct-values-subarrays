@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <unordered_set>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n; 
+ 
+	std::vector<ll> arr(static_cast<std::size_t>(n));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> arr[static_cast<std::size_t>(i)]; 
+	}
+ 
+	std::unordered_set<ll> seen{};
+	ll r{};
+	ll ans{};
+ 
+	for (ll l{ 0 }; l < n; ++l)
+	{
+		while (r < n && !seen.count(arr[static_cast<std::size_t>(r)]))
+		{
+			seen.insert(arr[static_cast<std::size_t>(r)]);
+			++r; 
+		}
+ 
+		ans += (r - l);
+ 
+		seen.erase(arr[static_cast<std::size_t>(l)]); 
+ 
+	}
+ 
+	std::cout << ans; 
+ 
+	return 0; 
+}
