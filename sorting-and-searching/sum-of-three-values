@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+ 
+	ll n{};
+	ll x{}; 
+	std::cin >> n >> x;
+ 
+	std::vector<std::pair<ll, ll>> arr(n); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> arr[i].first;
+		arr[i].second = i + 1;
+	}
+ 
+	std::sort(arr.begin(), arr.end()); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll num = arr[i].first;
+		ll sum{};
+		ll a{ i + 1 }; 
+		ll b{ n - 1 }; 
+ 
+		while (a < b)
+		{
+			sum = num + arr[a].first + arr[b].first; 
+ 
+			if (sum == x)
+			{
+				std::cout << arr[i].second << " " << arr[a].second << " " << arr[b].second << " "; 
+				return 0;
+			}
+ 
+			else if (sum > x)
+			{
+				--b; 
+			}
+ 
+			else if (sum < x)
+			{
+				++a;
+			}
+		}
+	}
+ 
+	std::cout << "IMPOSSIBLE" << "\n"; 
+ 
+	return 0;
+}
