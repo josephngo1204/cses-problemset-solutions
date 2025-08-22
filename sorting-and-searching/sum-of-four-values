@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+ 
+	ll n{};
+	ll y{};
+ 
+	std::cin >> n >> y;
+ 
+	std::vector<ll> input(static_cast<std::size_t>(n));
+ 
+	for (ll i{}; i < n; ++i)
+	{
+		std::cin >> input[static_cast<std::size_t>(i)];
+	}
+ 
+	std::unordered_map<ll, std::vector<std::pair<ll, ll>>> pair_sums{};
+ 
+	for (ll i{}; i < n; ++i)
+	{
+		for (ll j{ i + 1 }; j < n; ++j)
+		{
+			ll current_sum{};
+			current_sum = input[static_cast<std::size_t>(i)] + input[static_cast<std::size_t>(j)];
+ 
+			ll complement{};
+			complement = y - current_sum;
+ 
+			if (pair_sums.count(complement))
+			{
+				for (auto& x : pair_sums[complement])
+				{
+					if (i != x.first && i != x.second && j != x.first && j != x.second)
+					{
+						std::cout << x.first + 1 << " " << x.second + 1 << " " << i + 1 << " " << j + 1; 
+						return 0;
+					}
+				}
+			}
+			pair_sums[current_sum].push_back({ i, j });
+		}
+	}
+	
+	std::cout << "IMPOSSIBLE" << "\n";
+ 
+	return 0; 
+}
