@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	ll x{}; 
+ 
+	std::cin >> n >> x;
+ 
+	std::vector<ll> coins(static_cast<std::size_t>(n));
+	std::vector<ll> sum(static_cast<std::size_t>(x + 1));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> coins[static_cast<std::size_t>(i)]; 
+	}
+ 
+	sum[0] = 1;
+ 
+	for (ll i{ 0 }; i <= x; ++i)
+	{
+		for (auto c : coins)
+		{
+			if (i - c >= 0)
+			{
+				sum[static_cast<std::size_t>(i)] += sum[static_cast<std::size_t>(i - c)];
+				sum[static_cast<std::size_t>(i)] %= 1000000007;
+			}
+		}
+	}
+ 
+	std::cout << sum[static_cast<std::size_t>(x)]; 
+ 
+	return 0; 
+}
