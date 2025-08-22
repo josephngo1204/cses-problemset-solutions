@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<ll> pos(static_cast<std::size_t>(n + 1));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll input{};
+		std::cin >> input;
+ 
+		pos[static_cast<std::size_t>(input)] = i;
+	}
+ 
+	ll ans{1};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		if (pos[static_cast<std::size_t>(i + 1)] < pos[static_cast<std::size_t>(i)])
+			++ans; 
+	}
+ 
+	std::cout << ans; 
+ 
+	return 0;
+}
