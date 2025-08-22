@@ -1,0 +1,41 @@
+#include <iostream>
+#include <queue>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::queue<ll> nums{}; 
+	
+	for (ll i{ 1 }; i <= n; ++i)
+	{
+		nums.push(i);
+	}
+	
+	bool remove{ false };
+ 
+	while (nums.size() > 1)
+	{
+		ll person = nums.front(); 
+		nums.pop();
+ 
+		if (remove)
+		{
+			std::cout << person << " "; 
+		}
+ 
+		else
+		{
+			nums.push(person);
+		}
+ 
+		remove = !remove; 
+	}
+ 
+	std::cout << nums.front() << "\n"; 
+ 
+	return 0; 
+}
