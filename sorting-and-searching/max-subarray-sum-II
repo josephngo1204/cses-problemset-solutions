@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	ll a{};
+	ll b{};
+ 
+	std::cin >> n >> a >> b;
+ 
+	std::vector<ll> nums(static_cast<std::size_t>(n + 1));
+	std::vector<ll> prefixSums(static_cast<std::size_t>(n + 1));
+ 
+	prefixSums[0] = 0;
+ 
+	for (ll i{ 1 }; i <= n; ++i)
+	{
+		std::cin >> nums[static_cast<std::size_t>(i)];
+ 
+		prefixSums[static_cast<std::size_t>(i)] = prefixSums[static_cast<std::size_t>(i - 1)] + nums[static_cast<std::size_t>(i)];
+	}
+ 
+	std::multiset<ll> windowSums{}; 
+	ll bestSum{static_cast<ll>(-2e20)};
+ 
+	for (ll i{ 1 }; i <= n; ++i)
+	{
+		if (i - a >= 0)
+		{
+			windowSums.insert(prefixSums[static_cast<std::size_t>(i - a)]); 
+		}
+ 
+		if (i - b - 1 >= 0)
+		{
+			windowSums.erase(windowSums.find(prefixSums[static_cast<std::size_t>(i - b - 1)])); 
+		}
+ 
+ 
+		if (!windowSums.empty())
+		{
+			bestSum = std::max(bestSum, prefixSums[static_cast<std::size_t>(i)] - *windowSums.begin()); 
+		}
+	}
+ 
+	std::cout << bestSum; 
+ 
+	return 0; 
+}
