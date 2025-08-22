@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <map>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	ll x{};
+ 
+	std::cin >> n >> x;
+ 
+	std::vector<ll> nums(static_cast<std::size_t>(n));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> nums[static_cast<std::size_t>(i)];
+	}
+	
+	ll currentSum{};
+	ll count{};
+	std::map<ll, ll> prefixSum{};
+	prefixSum[0] = 1;
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		currentSum += nums[static_cast<std::size_t>(i)];
+ 
+		if (prefixSum.count(currentSum - x))
+		{
+			count += prefixSum[currentSum - x];
+		}
+ 
+		++prefixSum[currentSum];
+	}
+	
+	std::cout << count; 
+ 
+	return 0;
+}
