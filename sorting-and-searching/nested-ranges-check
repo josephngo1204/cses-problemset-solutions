@@ -1,0 +1,93 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+ 
+using namespace __gnu_pbds;
+ 
+template<typename T> using ordered_set = tree<T, null_type, std::less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+ 
+typedef long long ll;
+ 
+struct Range
+{
+public:
+	ll l{};
+	ll r{};
+	ll idx{};
+};
+ 
+bool compareRange(const Range& a, const Range& b)
+{
+	if (a.l == b.l)
+	{
+		return a.r > b.r;
+	}
+ 
+	return a.l < b.l;
+}
+ 
+int main()
+{
+ 
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+ 
+	ll n{}; 
+	std::cin >> n;
+ 
+	std::vector<Range> pair(n); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> pair[i].l >> pair[i].r; 
+ 
+		pair[i].idx = i;
+	}
+	
+	std::vector<int> contains(n, 0);
+	std::vector<int> containedBy(n, 0);
+ 
+	std::sort(pair.begin(), pair.end(), compareRange);
+ 
+	ordered_set<ll> s{};
+ 
+	for (ll i{ n - 1 }; i >= 0; --i)
+	{
+		ll y = pair[i].r;
+		ll count = s.order_of_key(y + 1); 
+ 
+		if (count > 0)
+			contains[pair[i].idx] = 1;
+ 
+		s.insert(y);
+	}
+ 
+	s.clear(); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll y = pair[i].r; 
+		ll count = s.size() - s.order_of_key(y);
+ 
+		if (count > 0)
+			containedBy[pair[i].idx] = 1;
+ 
+		s.insert(y);
+	}
+ 
+	for (auto x : contains)
+	{
+		std::cout << x << " "; 
+	}
+ 
+	std::cout << "\n";
+ 
+	for (auto x : containedBy)
+	{
+		std::cout << x << " "; 
+	}
+ 
+	return 0;
+}
