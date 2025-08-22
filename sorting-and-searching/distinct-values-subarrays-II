@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{}; 
+	ll k{};
+ 
+	std::cin >> n >> k;
+ 
+	std::vector<ll> nums(static_cast<std::size_t>(n)); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> nums[static_cast<std::size_t>(i)];
+	}
+ 
+	std::unordered_map<ll, ll> freq{};
+ 
+	ll count{}; 
+	ll left{};
+ 
+	for (ll right{}; right < n; ++right)
+	{
+		++freq[nums[static_cast<std::size_t>(right)]];
+ 
+		while (static_cast<ll>(freq.size()) > k)
+		{
+			--freq[nums[static_cast<std::size_t>(left)]];
+ 
+			if (freq[nums[static_cast<std::size_t>(left)]] == 0)
+			{
+				freq.erase(nums[static_cast<std::size_t>(left)]); 
+			}
+ 
+			++left; 
+		}
+ 
+		count += right - left + 1; 
+	}
+ 
+	std::cout << count << "\n";
+ 
+	return 0;
+}
