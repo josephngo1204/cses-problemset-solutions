@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+ 
+	ll n{};
+	std::cin >> n;
+ 
+	ll sum{};
+	std::vector<ll> books(n);
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> books[i]; 
+		sum += books[i];
+	}
+ 
+	std::sort(books.begin(), books.end()); 
+ 
+	sum -= books[n - 1];
+ 
+	if (sum <= books[n - 1])
+	{
+		std::cout << 2 * books[n - 1]; 
+	}
+ 
+	else
+	{
+		sum += books[n - 1];
+		std::cout << sum;
+	}
+ 
+	return 0;
+	
+}
