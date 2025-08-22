@@ -1,0 +1,89 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <utility>
+#include <algorithm>
+ 
+int main() {
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+ 
+    int n;
+    std::cin >> n;
+ 
+    std::vector<std::string> grid(n);
+    for (int i = 0; i < n; ++i) {
+        std::cin >> grid[i];
+    }
+ 
+    if (n == 0) {
+        std::cout << "" << std::endl;
+        return 0;
+    }
+ 
+    if (n == 1) {
+        std::cout << grid[0][0] << '\n';
+        return 0;
+    }
+ 
+    std::string res = "";
+    std::vector<std::pair<int, int>> current;
+    current.push_back(std::make_pair(0, 0));
+ 
+    std::vector<std::vector<bool>> inNext(n, std::vector<bool>(n, false));
+    std::vector<std::pair<int, int>> modified;
+ 
+    for (int step = 0; step < 2 * n - 2; ++step) {
+        char min_char = 127;
+ 
+        for (const auto& pos : current) {
+            int i = pos.first;
+            int j = pos.second;
+            if (j + 1 < n) {
+                char c = grid[i][j + 1];
+                if (c < min_char) {
+                    min_char = c;
+                }
+            }
+            if (i + 1 < n) {
+                char c = grid[i + 1][j];
+                if (c < min_char) {
+                    min_char = c;
+                }
+            }
+        }
+ 
+        std::vector<std::pair<int, int>> next;
+        for (const auto& pos : current) {
+            int i = pos.first;
+            int j = pos.second;
+            if (j + 1 < n && grid[i][j + 1] == min_char) {
+                if (!inNext[i][j + 1]) {
+                    inNext[i][j + 1] = true;
+                    modified.push_back(std::make_pair(i, j + 1));
+                    next.push_back(std::make_pair(i, j + 1));
+                }
+            }
+            if (i + 1 < n && grid[i + 1][j] == min_char) {
+                if (!inNext[i + 1][j]) {
+                    inNext[i + 1][j] = true;
+                    modified.push_back(std::make_pair(i + 1, j));
+                    next.push_back(std::make_pair(i + 1, j));
+                }
+            }
+        }
+ 
+        res += min_char;
+        current = std::move(next);
+ 
+        for (const auto& pos : modified) {
+            inNext[pos.first][pos.second] = false;
+        }
+        modified.clear();
+    }
+ 
+    std::string full = std::string(1, grid[0][0]) + res;
+    std::cout << full << '\n';
+ 
+    return 0;
+}
