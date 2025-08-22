@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+ 
+typedef long long ll;
+ 
+bool isValid(ll max_sum, ll k, std::vector<ll>& arr)
+{
+	ll currentSum{};
+	ll arrayCount{ 1 };
+ 
+	for (const auto& x : arr)
+	{
+		if (x > max_sum)
+			return false; 
+ 
+		if (currentSum + x <= max_sum)
+		{
+			currentSum += x;
+		}
+ 
+		else
+		{
+			++arrayCount;
+			currentSum = x;
+		}
+	}
+ 
+	return arrayCount <= k;
+}
+ 
+int main()
+{
+	ll n{};
+	ll k{}; 
+ 
+	std::cin >> n >> k;
+ 
+	std::vector<ll> nums(static_cast<std::size_t>(n));
+	ll totalSum{};
+	ll minSum{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> nums[static_cast<std::size_t>(i)];
+ 
+		totalSum += nums[static_cast<std::size_t>(i)];
+ 
+		if (nums[static_cast<std::size_t>(i)] > minSum)
+			minSum = nums[static_cast<std::size_t>(i)]; 
+	}
+ 
+	std::unordered_map<ll, ll> freq{};
+ 
+	ll ans{};
+	ll mid{};
+ 
+	while (minSum <= totalSum)
+	{
+		mid = minSum + ((totalSum - minSum) / 2); 
+ 
+		if (isValid(mid, k, nums))
+		{
+			totalSum = mid - 1; 
+			ans = mid; 
+		}
+ 
+		else
+		{
+			minSum = mid + 1; 
+		}
+	}
+ 
+	std::cout << ans << "\n";
+ 
+	return 0; 
+}
