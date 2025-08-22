@@ -1,0 +1,43 @@
+#include <iostream>
+#include <set>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+ 
+	ll x{};
+	ll n{};
+ 
+	std::cin >> x >> n; 
+ 
+	std::multiset<ll> gap{ x };
+	std::set<ll> lights{ 0, x };
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll a{};
+		std::cin >> a; 
+ 
+		auto it = lights.upper_bound(a);
+ 
+		ll right{ *it };
+		--it; 
+		ll left{ *it }; 
+ 
+		gap.erase(gap.find(right - left)); 
+ 
+		gap.insert(right - a);
+ 
+		gap.insert(a - left);
+ 
+		lights.insert(a); 
+ 
+		std::cout << *gap.rbegin() << " ";
+	}
+ 
+	return 0; 
+	
+}
