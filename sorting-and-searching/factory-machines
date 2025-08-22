@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+bool canMake(std::vector<ll>& machine, ll time, ll products)
+{
+	ll total{};
+ 
+	for (auto& x : machine)
+	{
+		total += time / x; 
+ 
+		if (total >= products)
+			return true;
+	}
+ 
+	return false; 
+}
+ 
+int main()
+{
+	ll n{};
+	ll t{};
+ 
+	std::cin >> n >> t;
+ 
+	std::vector<ll> m(n);
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> m[i]; 
+	}
+ 
+	std::sort(m.begin(), m.end());
+ 
+	ll a{};
+	ll b{ m[n-1] * t};
+ 
+	while (a < b)
+	{
+		ll mid = (a + b) / 2;
+ 
+		if (canMake(m, mid, t))
+		{
+			b = mid;
+		}
+ 
+		else
+		{
+			a = mid + 1;
+		}
+	}
+ 
+ 
+	std::cout << a << "\n";
+	
+	return 0; 
+}
