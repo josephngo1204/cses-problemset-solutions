@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n; 
+ 
+	std::vector<ll> coins(n);
+	ll maxSum{}; 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> coins[i];
+ 
+		maxSum += coins[i]; 
+	}
+ 
+	std::vector<bool> dp(maxSum + 1); 
+	std::set<ll> ans{}; 
+ 
+	dp[0] = true; 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		for (ll j{ maxSum }; j >= 0; --j)
+		{
+			if (dp[j] == true) {
+				dp[j + coins[i]] = true;
+				ans.insert(j + coins[i]); 
+			}
+		}
+	}
+ 
+	ll count{};
+ 
+	for (auto x : dp)
+	{
+		if (x)
+		{
+			++count; 
+		}
+	}
+ 
+	std::cout << count - 1 << "\n"; 
+ 
+	for (auto y : ans)
+	{
+		std::cout << y << " "; 
+	}
+ 
+	return 0; 
+ 
+}
