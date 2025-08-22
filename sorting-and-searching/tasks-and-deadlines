@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<std::pair<ll, ll>> tasks(n);
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> tasks[i].first >> tasks[i].second;
+	}
+ 
+	std::sort(tasks.begin(), tasks.end(), [](const std::pair<ll, ll>& a, const std::pair<ll, ll>& b)
+		{
+			if (a.first == b.first) { return a.second < b.second; }
+ 
+			return a.first < b.first;
+		}); 
+ 
+	ll reward{};
+	ll time{};
+ 
+	for (auto x : tasks)
+	{
+		time += x.first; 
+		reward = reward + (x.second - time);
+	}
+ 
+	std::cout << reward << "\n";
+ 
+	return 0;
+}
