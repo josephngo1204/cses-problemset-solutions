@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+std::size_t toIndex(ll x)
+{
+	return static_cast<std::size_t>(x);
+}
+ 
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+ 
+	ll n{};
+	std::cin >> n; 
+ 
+	std::vector<ll> arr(toIndex(n)); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> arr[toIndex(i)]; 
+	}
+ 
+	std::map<ll, ll> lastSeen{};
+	ll maxLength{};
+	ll start{};
+ 
+	for (ll end{ 0 }; end < n; ++end)
+	{
+		ll currentSong = arr[toIndex(end)];
+ 
+		if (lastSeen.count(currentSong) && lastSeen[static_cast<std::size_t>(currentSong)] >= start)
+		{
+			start = lastSeen[toIndex(currentSong)] + 1;
+		}
+ 
+		lastSeen[toIndex(currentSong)] = end; 
+ 
+		maxLength = std::max(maxLength, end - start + 1);
+	}
+ 
+	std::cout << maxLength; 
+ 
+	return 0; 
+}
