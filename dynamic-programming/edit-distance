@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	std::string s1{};
+	std::string s2{};
+ 
+	std::cin >> s1;
+	std::cin >> s2;
+ 
+	std::vector<std::vector<ll>> dp(static_cast<std::size_t>(s1.size() + 1), std::vector<ll>(static_cast<std::size_t>(s2.size() + 1)));
+ 
+	for (ll i{ 0 }; i <= static_cast<ll>(s1.size()); ++i)
+	{
+		dp[static_cast<std::size_t>(i)][0] = i;
+	}
+ 
+	for (ll j{ 0 }; j <= static_cast<ll>(s2.size()); ++j)
+	{
+		dp[0][static_cast<std::size_t>(j)] = j;
+	}
+ 
+	for (ll i{ 1 }; i <= static_cast<ll>(s1.size()); ++i)
+	{
+		for (ll j{ 1 }; j <= static_cast<ll>(s2.size()); ++j)
+		{
+			if (s1[static_cast<std::size_t>(i - 1)] == s2[static_cast<std::size_t>(j - 1)])
+			{
+				dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j)] = dp[static_cast<std::size_t>(i - 1)][static_cast<std::size_t>(j - 1)]; 
+			}
+ 
+			else
+			{
+				dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j)] = std::min(std::min(dp[static_cast<std::size_t>(i - 1)][static_cast<std::size_t>(j)] + 1, dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j - 1)] + 1), dp[static_cast<std::size_t>(i - 1)][static_cast<std::size_t>(j - 1)] + 1);
+			}
+		}
+	}
+ 
+	std::cout << dp[static_cast<std::size_t>(static_cast<ll>(s1.size()))][static_cast<std::size_t>(static_cast<ll>(s2.size()))];
+ 
+	return 0; 
+}
