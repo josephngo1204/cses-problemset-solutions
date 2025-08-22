@@ -1,0 +1,70 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <set>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	ll m{};
+ 
+	std::cin >> n >> m;
+ 
+	std::vector<ll> value(static_cast<std::size_t>(n + 2));
+	std::vector<ll> position(static_cast<std::size_t>(n + 2));
+ 
+	for (ll i{ 1 }; i <= n; ++i)
+	{
+		std::cin >> value[static_cast<std::size_t>(i)];
+		position[static_cast<std::size_t>(value[static_cast<std::size_t>(i)])] = i;
+	}
+ 
+	ll rounds{ 1 };
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		if (position[static_cast<std::size_t>(i)] > position[static_cast<std::size_t>(i + 1)])
+			++rounds;
+	}
+ 
+	for (ll i{ 0 }; i < m; ++i)
+	{
+		ll a{};
+		ll b{};
+ 
+		std::cin >> a >> b;
+ 
+		std::set<std::pair<ll, ll>> pairs{};
+ 
+		if (value[static_cast<std::size_t>(a)] - 1 >= 1) pairs.insert({ value[static_cast<std::size_t>(a)] - 1, value[static_cast<std::size_t>(a)] });
+		if (value[static_cast<std::size_t>(a)] + 1 <= n) pairs.insert({ value[static_cast<std::size_t>(a)], value[static_cast<std::size_t>(a)] + 1 });
+		if (value[static_cast<std::size_t>(b)] - 1 >= 1) pairs.insert({ value[static_cast<std::size_t>(b)] - 1, value[static_cast<std::size_t>(b)] });
+		if (value[static_cast<std::size_t>(b)] + 1 <= n) pairs.insert({ value[static_cast<std::size_t>(b)], value[static_cast<std::size_t>(b)] + 1 });
+ 
+		for (const auto& x : pairs)
+		{
+			if (position[static_cast<std::size_t>(x.first)] > position[static_cast<std::size_t>(x.second)])
+			{
+				--rounds; 
+			}
+		}
+ 
+		std::swap(value[static_cast<std::size_t>(a)], value[static_cast<std::size_t>(b)]);
+		position[static_cast<std::size_t>(value[static_cast<std::size_t>(a)])] = a;
+		position[static_cast<std::size_t>(value[static_cast<std::size_t>(b)])] = b;
+ 
+		for (const auto& x : pairs)
+		{
+			if (position[static_cast<std::size_t>(x.first)] > position[static_cast<std::size_t>(x.second)])
+			{
+				++rounds;
+			}
+		}
+ 
+		std::cout << rounds << "\n"; 
+	}
+	
+	return 0; 
+}
