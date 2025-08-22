@@ -1,0 +1,38 @@
+#include <iostream>
+#include <set>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
+ 
+	ll n{};
+	std::cin >> n; 
+ 
+	std::multiset<ll> tower{};
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll input{};
+		std::cin >> input;
+ 
+		auto it = tower.upper_bound(input);
+ 
+		if (it != tower.end())
+		{
+			tower.erase(it);
+			tower.insert(input);
+		}
+		else
+		{
+			tower.insert(input);
+		}
+	}
+ 
+	std::cout << tower.size(); 
+ 
+	return 0; 
+	
+}
