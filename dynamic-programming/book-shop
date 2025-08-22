@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	ll x{};
+ 
+	std::cin >> n >> x;
+ 
+	std::vector<ll> prices(static_cast<std::size_t>(n));
+	std::vector<ll> pages(static_cast<std::size_t>(n)); 
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> prices[static_cast<std::size_t>(i)]; 
+	}
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> pages[static_cast<std::size_t>(i)]; 
+	}
+ 
+	std::vector<ll> dp(static_cast<std::size_t>(x + 1));
+ 
+	dp[0] = 0;
+ 
+	for (ll j{ 0 }; j < n; ++j)
+	{
+		for (ll i{ x }; i >= prices[static_cast<std::size_t>(j)]; --i)
+		{
+			dp[static_cast<std::size_t>(i)] = std::max(dp[static_cast<std::size_t>(i)], dp[static_cast<std::size_t>(i - prices[static_cast<std::size_t>(j)])] + pages[static_cast<std::size_t>(j)]);
+		}
+	}
+ 
+	std::cout << dp[static_cast<std::size_t>(x)]; 
+ 
+	return 0;
+}
