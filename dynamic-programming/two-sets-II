@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{}; 
+	std::cin >> n; 
+ 
+	ll total = (n * (n + 1)) / 2; 
+ 
+	if (total % 2 != 0)
+	{
+		std::cout << 0; 
+		return 0; 
+	}
+ 
+	std::vector<ll> dp(1 + (total / 2));
+ 
+	dp[0] = 1; 
+ 
+	for (ll k{ 1 }; k <= n; ++k)
+	{
+		for (ll i{ total / 2 }; i >= k; --i)
+		{
+			dp[i] += dp[i - k];
+			dp[i] %= 1000000007; 
+		}
+	}
+ 
+	std::cout << (dp[total / 2] * 500000004LL) % (1000000007);
+}
