@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n;
+ 
+	std::vector<std::pair<ll, ll>> arr(static_cast<std::size_t>(n));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> arr[static_cast<std::size_t>(i)].first;
+ 
+		arr[static_cast<std::size_t>(i)].second = i;
+	}
+ 
+	std::stack<std::pair<ll, ll>> s{};
+ 
+	std::vector<ll> ans(static_cast<std::size_t>(n));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		ll num{};
+		num = arr[static_cast<std::size_t>(i)].first;
+ 
+		ll idx{};
+		idx = arr[static_cast<std::size_t>(i)].second; 
+ 
+		while (!s.empty() && s.top().first >= num)
+		{
+			s.pop(); 
+		}
+ 
+		if (s.empty())
+		{
+			ans[static_cast<std::size_t>(idx)] = 0;
+		}
+ 
+		else if (s.top().first < num)
+		{
+			ans[static_cast<std::size_t>(idx)] = s.top().second + 1;
+		}
+ 
+		s.push({ num, idx });
+	}
+ 
+	for (const auto& x : ans)
+	{
+		std::cout << x << " "; 
+	}
+ 
+	return 0; 
+}
