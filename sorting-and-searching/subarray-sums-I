@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+ 
+typedef long long ll;
+ 
+int main()
+{
+	ll n{};
+	ll x{};
+ 
+	std::cin >> n >> x;
+ 
+	std::vector<ll> nums(static_cast<std::size_t>(n));
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> nums[static_cast<std::size_t>(i)];
+	}
+	
+	ll currentSum{};
+	ll count{};
+	ll a{};
+ 
+	for (ll b{}; b < n; ++b)
+	{
+		currentSum += nums[static_cast<std::size_t>(b)];
+ 
+		while (currentSum > x && a <= b)
+		{
+			currentSum -= nums[static_cast<std::size_t>(a)];
+			++a;
+		}
+ 
+		if (currentSum == x)
+			++count;	
+	}
+ 
+	std::cout << count; 
+ 
+	return 0;
+}
