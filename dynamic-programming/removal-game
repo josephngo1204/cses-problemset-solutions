@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+ll totalSum(ll lower, ll upper, std::vector<ll>& arr)
+{
+	ll total{}; 
+ 
+	for (ll i{ lower }; i <= upper; ++i)
+	{
+		total += arr[i]; 
+	}
+ 
+	return total; 
+}
+ 
+int main()
+{
+	ll n{};
+	std::cin >> n; 
+ 
+	std::vector<ll> nums(n);
+ 
+	for (ll i{ 0 }; i < n; ++i)
+	{
+		std::cin >> nums[i];
+	}
+ 
+	std::vector<std::vector<ll>> dp(n, std::vector<ll>(n, 0));
+ 
+	for (ll left{ n - 1 }; left >= 0; --left)
+	{
+		for (ll right{ left }; right < n; ++right)
+		{
+			if (left == right) {
+				dp[left][right] = nums[left]; 
+			}
+		
+			else
+			{
+				dp[left][right] = std::max(nums[right] - dp[left][right - 1], nums[left] - dp[left + 1][right]);
+			}
+		}
+	}
+ 
+	ll sum{ totalSum(0, n - 1, nums) }; 
+ 
+	ll ans{}; 
+	ans = (sum + dp[0][n - 1]) / 2; 
+ 
+	std::cout << ans; 
+ 
+	return 0; 
+}
