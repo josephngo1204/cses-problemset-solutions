@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+typedef long long ll; 
+ 
+int main()
+{
+	ll a{};
+	ll b{};
+ 
+	std::cin >> a >> b;
+ 
+	std::vector<std::vector<ll>> dp(static_cast<std::size_t>(a + 1), std::vector<ll>(static_cast<std::size_t>(b + 1))); 
+ 
+ 
+	for (ll i{ 1 }; i <= a; ++i)
+	{
+		for (ll j{ 1 }; j <= b; ++j)
+		{
+			dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j)] = 100000000; 
+ 
+			if (i == j)
+			{
+				dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j)] = 0;
+			}
+ 
+			else
+			{
+				for (ll c{ 1 }; c < i; ++c)
+				{
+					dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j)] = std::min(dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j)], dp[static_cast<std::size_t>(c)][static_cast<std::size_t>(j)] + dp[static_cast<std::size_t>(i - c)][static_cast<std::size_t>(j)] + 1);
+				}
+ 
+				for (ll c{ 1 }; c < j; ++c)
+				{
+					dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j)] = std::min(dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j)], dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(c)] + dp[static_cast<std::size_t>(i)][static_cast<std::size_t>(j - c)] + 1);
+				}
+			}
+		}
+	}
+ 
+	std::cout << dp[static_cast<std::size_t>(a)][static_cast<std::size_t>(b)]; 
+}
