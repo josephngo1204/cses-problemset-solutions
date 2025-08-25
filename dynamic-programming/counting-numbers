@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <cstring>
+
+typedef long long ll;
+
+ll a{}, b{}; 
+ll dp[20][10][2][2];
+
+ll num(std::string s, ll digit, ll prev_char, bool leading_zero, bool tight)
+{
+	if (digit == 0)
+		return 1;
+
+	if (dp[digit][prev_char][leading_zero][tight] != -1)
+		return dp[digit][prev_char][leading_zero][tight];
+
+	ll limit{};
+	if (tight == 0)
+	{
+		limit = 9; 
+	}	
+	else
+	{
+		ll str = s.size();
+		limit = s[str - digit] - 48;
+	}
+
+	ll countAnswer{};
+
+	for (ll curr_char{ 0 }; curr_char <= limit; ++curr_char)
+	{
+		if (leading_zero == 0 && (curr_char == prev_char))
+			continue;
+
+		ll new_leading_zero{}; 
+		if (leading_zero == 1 && curr_char == 0)
+			new_leading_zero = 1;
+		else
+			new_leading_zero = 0; 
+
+		ll new_tight{};
+		if (tight == 1 && (curr_char == limit))
+			new_tight = 1;
+		else
+			new_tight = 0; 
+
+		countAnswer += num(s, digit - 1, curr_char, new_leading_zero, new_tight); 
+	}
+
+	dp[digit][prev_char][leading_zero][tight] = countAnswer;
+
+	return dp[digit][prev_char][leading_zero][tight];
+}
+
+int main()
+{
+	std::cin >> a >> b;
+
+	std::string a1{}; 
+	a1 = std::to_string(a); 
+
+	memset(dp, -1, sizeof(dp)); 
+	std::string a2 = std::to_string(a - 1); 
+	ll count1 = num(a2, a2.size(), -1, 1, 1);
+
+	std::string b1{};
+	b1 = std::to_string(b); 
+
+	memset(dp, -1, sizeof(dp)); 
+	std::string b2 = std::to_string(b); 
+	ll count2 = num(b2, b2.size(), -1, 1, 1);
+
+	std::cout << count2 - count1; 
+}
